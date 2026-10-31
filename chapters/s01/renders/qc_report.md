@@ -18,6 +18,7 @@
 | 真峰值 | 约 −3.5 dBTP |
 | 解码测试 | `ffmpeg -f null -` 通过，无报错 |
 | 字幕 | 103 条 SRT；103 个 ASS 事件；烧录正常 |
+| 封面 | 1920×1080（16:9）；中心 4:3 裁切 `cover_4x3_preview.png` 检查通过 |
 | 成片 SHA-256 | `c8cc76d3fa17fb2584cf23dedea1ff46b5e5df58d77f0cfd5d80c32de95e2503` |
 
 ## 2. 科学核对

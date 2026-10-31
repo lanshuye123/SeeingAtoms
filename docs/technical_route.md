@@ -222,6 +222,21 @@ ffmpeg -hide_banner -y \
   chapters/s01/renders/s01_final.mp4
 ```
 
+### 4.3.1 封面生成与 4:3 检查
+
+封面是 16:9，但核心内容必须位于居中 4:3 区域（1920×1080 画布上为 1440×1080，x=240–1680）。
+
+```bash
+source scripts/env.sh
+make cover
+```
+
+产物：
+- `chapters/s01/renders/cover.png`（1920×1080，16:9）
+- `chapters/s01/renders/cover_4x3_preview.png`（中心 1440×1080 裁切，仅用于质检）
+
+生成脚本：`chapters/s01/manim/cover.py`。封面属于可重复生成的发布素材，按 `docs/repository_policy.md` 不入 Git。
+
 ### 4.4 画面安全区
 
 - 标题/主体：左右各留 8%，顶部留 10%。

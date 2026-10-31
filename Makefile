@@ -9,7 +9,7 @@ TTS_PY := /home/lanshuye/miniconda3/envs/qwen3-tts/bin/python
 
 export PATH := $(TEX_BIN):$(PATH)
 
-.PHONY: env fonts smoke tex-smoke copy-check tts-dry tts-check patterns audio srt ass scenes credits concat final clean-preview
+.PHONY: env fonts smoke tex-smoke copy-check tts-dry tts-check patterns audio srt ass scenes credits cover concat final clean-preview
 
 env:
 	bash scripts/check_env.sh
@@ -61,6 +61,13 @@ credits:
 	UV_CACHE_DIR="$(UV_CACHE_DIR)" XDG_CACHE_HOME="$(XDG_CACHE_HOME)" MPLCONFIGDIR="$(MPLCONFIGDIR)" \
 	.venv/bin/manim -qh --fps 30 --media_dir media chapters/s01/manim/credits.py S10Credits
 	cp media/videos/credits/1080p30/S10Credits.mp4 chapters/s01/renders/segments/S10_credits.mp4
+
+cover:
+	UV_CACHE_DIR="$(UV_CACHE_DIR)" XDG_CACHE_HOME="$(XDG_CACHE_HOME)" MPLCONFIGDIR="$(MPLCONFIGDIR)" \
+	.venv/bin/manim -qh --fps 30 -s --media_dir media chapters/s01/manim/cover.py S01Cover
+	cp media/images/cover/S01Cover_ManimCE_v0.19.0.png chapters/s01/renders/cover.png
+	ffmpeg -hide_banner -loglevel error -y -i chapters/s01/renders/cover.png \
+		-vf "crop=1440:1080:240:0" chapters/s01/renders/cover_4x3_preview.png
 
 concat:
 	ffmpeg -hide_banner -y -f concat -safe 0 -i chapters/s01/renders/concat.txt -c copy chapters/s01/renders/s01_silent.mp4

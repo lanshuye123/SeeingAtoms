@@ -46,6 +46,7 @@
 | S01 布拉格公式样张 | `chapters/s01/assets/style_frame_02_bragg.png` | 视觉方向参考；含“示意·非成片”标记 | 项目自制 |
 | S01 配乐 bed | `chapters/s01/audio/music_main.wav`、`music_credits.wav` | Python 合成 ambient pad，无第三方采样 | 项目自制 |
 | S01 成片/字幕 | `chapters/s01/renders/s01_final.mp4`、`.srt`、`.ass` | 最终交付物；含 COD 数据与第三方工具署名 | 项目自制（素材见 1.2） |
+| S01 封面 | `chapters/s01/renders/cover.png`、`cover_4x3_preview.png` | 16:9 封面及中心 4:3 裁切检查图 | 项目自制 |
 | XeLaTeX 公式测试帧 | `media/images/tex_smoke_test/TeXSmokeTest_ManimCE_v0.19.0.png` | 公式/中文 TeX 验证，不进入成片 | 项目自制 |
 | TTS 冒烟测试音频 | `logs/tts_cpu_smoke.wav`、`logs/tts_wrapper_smoke.wav` | 仅用于环境验证，不进入成片 | 项目自制 |
 | 主题色/字体配置 | `src/render/theme.py` | 视觉规范代码 | 项目自制 |

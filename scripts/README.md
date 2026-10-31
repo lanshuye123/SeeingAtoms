@@ -137,6 +137,12 @@ make audio
 make srt
 ```
 
+封面（16:9，核心内容在居中 4:3）：
+
+```bash
+make cover
+```
+
 全场景 + 片尾 + 合成：
 
 ```bash

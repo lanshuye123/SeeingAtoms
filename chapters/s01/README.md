@@ -17,6 +17,8 @@
 | [`renders/s01_final.mp4`](renders/s01_final.mp4) | 最终成片，1920×1080 / 30 fps / H.264 / AAC，约 9:38 |
 | [`renders/s01_final.srt`](renders/s01_final.srt) | 中文字幕，103 条 |
 | [`renders/s01_final.ass`](renders/s01_final.ass) | 烧录用样式字幕（1920×1080） |
+| [`renders/cover.png`](renders/cover.png) | 16:9 封面；核心内容在居中 4:3 安全区 |
+| [`renders/cover_4x3_preview.png`](renders/cover_4x3_preview.png) | 封面中心 4:3 裁切检查图（非发布物） |
 | [`script.md`](script.md) | 旁白稿、反 AI 味说明、术语、待确认项 |
 | [`storyboard.md`](storyboard.md) | 分镜、画面、动画、字幕、计划时间轴 |
 | [`fact_check.md`](fact_check.md) | 逐条科学事实核对 |
@@ -38,6 +40,7 @@
 - 公式：XeLaTeX + `S01_TEX_TEMPLATE`
 - 晶体数据：COD 9008565（Si）、COD 9004141（金红石，25 °C）
 - 片尾：黑色背景向上滚动，约 70 秒
+- 封面：1920×1080，16:9；核心内容位于居中 1440×1080（4:3）安全区
 
 ## 4. 验收重点
 

@@ -29,6 +29,7 @@ CIF 是外部开放数据（COD），体积只有几 KB；入库可以让构建�
 | 成片/字幕/渲染段 | `chapters/s01/renders/*`（`qc_report.md` 除外）、`*.mp4`、`*.srt`、`*.ass` | Manim、ffmpeg |
 | 字体二进制 | `assets/fonts/*.otf`、`*.ttf` | 系统字体包/上游字体项目；`make fonts` |
 | 风格样张 | `chapters/s01/assets/style_frame_*.png` | Manim |
+| 封面 | `chapters/s01/renders/cover*.png` | `make cover` |
 | 计算谱线 | `chapters/s01/assets/xrd_patterns.json` / `.txt` | `scripts/build_xrd_patterns.py` |
 | 派生文本 | `chapters/s01/script/narration.txt`、`segments.json`、`scene_segments.json` | `scripts/extract_narration.py` |
 
