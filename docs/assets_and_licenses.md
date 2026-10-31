@@ -1,0 +1,115 @@
+# 素材与许可证记录
+
+> 更新日期：2026-10-31
+> 原则：所有进入成片的第三方素材必须有明确来源与许可证；无法确认的素材不用。
+> 当前阶段：仅使用项目自制图形与本地开源字体；未下载第三方图片、视频或音乐。
+
+## 1. 字体
+
+字体文件均已复制到 `assets/fonts/`，Manim 与 ffmpeg 字幕统一从该目录读取。字体二进制默认不入 Git（体积约 63 MB），只保留许可证与 `scripts/fetch_fonts.sh`；新机器运行 `make fonts` 从本机字体目录复制并校验 SHA-256。
+
+| 文件 | 字体名 | 来源 | 许可证 | 本地许可证 | SHA-256 |
+|---|---|---|---|---|---|
+| `SourceHanSansCN-Regular.otf` | 思源黑体 CN / Source Han Sans CN | Adobe Source Han Sans；本机 `/usr/share/fonts/adobe-source-han-sans/`；上游 https://github.com/adobe-fonts/source-han-sans | SIL Open Font License 1.1 | `assets/fonts/LICENSE-SourceHanSans.txt` | `e2bc8a2e7f37474b774fff8db758681ece40bb6947a90d571bce9dd60671a8e4` |
+| `SourceHanSansCN-Bold.otf` | 思源黑体 CN Bold | 同上 | SIL OFL 1.1 | 同上 | `62383707c086a32f3afd5e293f34c7eff64c7fea31f579fdc6cbe34d920519a6` |
+| `SourceHanSerifCN-Regular.otf` | 思源宋体 CN / Source Han Serif CN | Adobe Source Han Serif；本机 `/usr/share/fonts/adobe-source-han-serif/`；上游 https://github.com/adobe-fonts/source-han-serif | SIL OFL 1.1 | `assets/fonts/LICENSE-SourceHanSerif.txt` | `3754ea669c530e2473354f8f6d9f79680a44d7e26ec7d00eeabee4a7e0753c5d` |
+| `SourceHanSerifCN-SemiBold.otf` | 思源宋体 CN SemiBold | 同上 | SIL OFL 1.1 | 同上 | `50d3f12201ce2dd840650b6bfa47ebb8572ecf767eec0e5ccb20a247b5bfa805` |
+| `LXGWWenKai-Regular.ttf` | 霞鹜文楷 / LXGW WenKai | LXGW WenKai；本机 `/usr/share/fonts/lxgw-wenkai-v1.522/`；上游 https://github.com/lxgw/LxgwWenKai | SIL OFL 1.1 | `assets/fonts/OFL-LXGWWenKai.txt` | `39ad71264b588165b469e35e6afb162a378dacd1f95348160240ba9038ac3009` |
+
+### 1.1 署名与合规
+
+- OFL 允许嵌入、分发字体，要求保留版权与许可证；本项目在 `assets/fonts/` 保留完整许可证。
+- 片尾用一行简洁署名即可：
+  > 字体：思源黑体 / 思源宋体 / 霞鹜文楷（SIL Open Font License 1.1）
+- 不在画面中放许可证全文；全文见本文件与 `assets/fonts/`。
+- 不修改字体文件，不单独售卖字体。
+
+## 1.2 开放晶体结构数据（COD）
+
+| 文件 | 结构 | COD | 原始文献 | 许可/使用条件 | SHA-256 |
+|---|---|---|---|---|---|
+| `chapters/s01/assets/cif/Si_9008565.cif` | Si，金刚石立方，Fd-3m，a=5.4307 Å | [9008565](http://www.crystallography.net/cod/9008565.html) | Wyckoff R W G. *Crystal Structures*, 2nd ed., 1963, 1: 7–83. 原始数据 AMCSD 0011243 | COD 条目要求对原始文献作 proper attribution | `46fb44ccdf93d1c3c1ecbe5b04ab0dea28c786bac20467b3a7511199af50e386` |
+| `chapters/s01/assets/cif/Rutile_9004141.cif` | TiO2 金红石，P42/mnm，a=4.593 Å，c=2.959 Å，25 °C | [9004141](http://www.crystallography.net/cod/9004141.html) | Meagher E P, Lager G A. *The Canadian Mineralogist*, 1979, 17: 77–85. 原始数据 AMCSD 0005164 | 同上 | `ce9abab142351e802bde3eb40dbb554bb3ccec08e8c6ddc4299c0c532e9794ce` |
+
+- 计算谱线：`chapters/s01/assets/xrd_patterns.json` / `.txt`，由 `scripts/build_xrd_patterns.py` 生成；`gemmi 0.7.5`，Cu Kα1=1.5406 Å，运动学近似。
+- 片尾/说明栏保留 COD 编号与原始文献；不把计算谱线说成实测数据。
+- COD 首页：http://www.crystallography.net/ ；条目页含完整元数据。
+
+## 2. 项目自制素材
+
+以下素材由本项目生成，不含第三方图像/音频采样：
+
+| 素材 | 位置 | 说明 | 许可/状态 |
+|---|---|---|---|
+| Manim 中文冒烟测试帧 | `media/images/manim_smoke_test/CJKSmokeTest_ManimCE_v0.19.0.png` | 仅用于技术验证，不进入成片 | 项目自制 |
+| S01 标题风格样张 | `chapters/s01/assets/style_frame_01.png` | 视觉方向参考；含“非成片”标记 | 项目自制 |
+| S01 布拉格公式样张 | `chapters/s01/assets/style_frame_02_bragg.png` | 视觉方向参考；含“示意·非成片”标记 | 项目自制 |
+| S01 配乐 bed | `chapters/s01/audio/music_main.wav`、`music_credits.wav` | Python 合成 ambient pad，无第三方采样 | 项目自制 |
+| S01 成片/字幕 | `chapters/s01/renders/s01_final.mp4`、`.srt`、`.ass` | 最终交付物；含 COD 数据与第三方工具署名 | 项目自制（素材见 1.2） |
+| XeLaTeX 公式测试帧 | `media/images/tex_smoke_test/TeXSmokeTest_ManimCE_v0.19.0.png` | 公式/中文 TeX 验证，不进入成片 | 项目自制 |
+| TTS 冒烟测试音频 | `logs/tts_cpu_smoke.wav`、`logs/tts_wrapper_smoke.wav` | 仅用于环境验证，不进入成片 | 项目自制 |
+| 主题色/字体配置 | `src/render/theme.py` | 视觉规范代码 | 项目自制 |
+| S01 概念图/动画 | `chapters/s01/manim/`（阶段三生成） | 晶体、波、衍射圆锥、图谱等 | 项目自制 |
+| S01 合成衍射数据 | `chapters/s01/assets/`（阶段三生成） | 简单立方模型数据，画面标注“模型数据，非实测” | 项目自制 |
+
+## 3. 配乐与音效
+
+### 当前状态
+
+- 阶段二未使用任何第三方配乐/音效。
+- 成片计划使用**项目自制合成 ambient pad**：用 Python 生成低频持续音、柔和和声与轻度滤波噪声，不含采样材料。
+- 这样处理的原因：避免版权不明、登录/付费限制、CC-BY 归属信息缺失等风险。
+
+### 如果改用外部素材
+
+必须先在操作员日志中记录，再使用；记录字段如下：
+
+| 字段 | 要求 |
+|---|---|
+| 作品名 | 原名称 |
+| 作者 | 作者/演奏者 |
+| 来源 URL | 可直接访问的原始页面 |
+| 许可证 | CC0 / Public Domain / CC-BY 4.0 等，附许可证链接 |
+| 下载日期 | YYYY-MM-DD |
+| 修改 | 是否剪辑、变调、混音 |
+| 署名要求 | 是否需要在片尾署名；署名文案 |
+| 文件哈希 | SHA-256 |
+
+禁止使用：版权不明、需登录、付费、限制嵌入、仅“免费试听”、来源为搬运/二传的素材。
+
+## 4. 第三方图片/视频
+
+当前：使用 COD 的 Si/金红石 CIF 数据，按原始文献署名；未使用论文插图、厂商图或网络图片。
+
+如后续需要真实显微照片或衍射图，优先顺序：
+
+1. 项目自制合成图（标注“示意/模型数据”）；
+2. 公共领域（PD）或 CC0 素材；
+3. CC-BY 素材（片尾与说明栏署名）；
+4. 获得书面授权的素材。
+
+不使用期刊封面、论文插图、厂商宣传图、社交媒体图片，除非有明确再使用许可。
+
+## 5. 软件与工具许可证（操作员可见）
+
+| 工具 | 版本 | 许可证/说明 |
+|---|---|---|
+| Manim Community | 0.19.0 | MIT License |
+| FFmpeg | 9.0.2 | LGPL/GPL（按发行版编译选项）；本项目仅调用命令行 |
+| Qwen3-TTS | 本地模型/代码 | 以模型仓库与代码仓库许可证为准；本项目不修改模型代码，仅调用推理接口 |
+| Python | 3.11.15（项目）/ 3.12.13（TTS） | PSF License |
+| 思源黑体/宋体 | 本地版本 | SIL OFL 1.1 |
+| TeX Live 2025 | 本地安装 | TeX Live 发行版（含 LPPL 等自由许可证）；本项目仅调用 `xelatex`/`dvisvgm`，不随视频再分发 |
+| 霞鹜文楷 | 本地版本 | SIL OFL 1.1 |
+
+> 说明：软件许可证不影响视频内容的版权，但再分发本项目时需保留相应许可证文本。当前交付物为视频与文档，不包含软件二进制。
+
+## 6. 片尾署名草案
+
+见 `docs/credits.md`。原则：只列必要署名，不列 URL、DOI、内部路径、软件安装信息。
+
+## 7. 待确认
+
+1. 片尾是否出现具体作者/单位/指导教师姓名；如需要，请提供准确写法。
+2. 是否接受项目自制配乐；如希望使用特定风格/曲目，请提供可授权来源。
+3. 是否需要把课程笔记作者/课程名称写入片尾；当前只写“课程笔记支持”，不写个人姓名。
