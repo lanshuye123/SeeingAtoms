@@ -1,8 +1,8 @@
 # 素材与许可证记录
 
-> 更新日期：2026-10-31
+> 更新日期：2026-11-01
 > 原则：所有进入成片的第三方素材必须有明确来源与许可证；无法确认的素材不用。
-> 当前阶段：仅使用项目自制图形与本地开源字体；未下载第三方图片、视频或音乐。
+> 当前阶段：S01 仅使用项目自制图形与本地开源字体；S02 新增 CC0/PD 实拍图、AI 氛围插图、原创 MIDI 配乐与模拟 HRTEM（见 §8）。
 
 ## 1. 字体
 
@@ -114,3 +114,63 @@
 1. 片尾是否出现具体作者/单位/指导教师姓名；如需要，请提供准确写法。
 2. 是否接受项目自制配乐；如希望使用特定风格/曲目，请提供可授权来源。
 3. 是否需要把课程笔记作者/课程名称写入片尾；当前只写“课程笔记支持”，不写个人姓名。
+
+## 8. S02 新增素材（2026-11-01）
+
+### 8.1 第三方图像（CC0 / 公共领域）
+
+| 文件 | 内容 | 来源/作者 | 许可证 | 修改 | 署名 |
+|---|---|---|---|---|---|
+| `chapters/s02/assets/cc0/cdc_tem_1965.jpg` | 1965 年 CDC 透射电镜历史照片 | CDC / C. Duncan；<http://www.publicdomainfiles.com/show_file.php?id=13515915019118> | 公共领域（美国联邦政府作品） | 未修改；正式使用时可能裁切/去色 | 建议 “CDC / C. Duncan, 1965” |
+| `chapters/s02/assets/cc0/nist_graphene_chips.jpg` | NIST 石墨烯芯片与硬币比例照片 | NIST；<https://www.nist.gov/image/graphene-chipsjpg> | 公共领域（Credit NIST） | 未修改；可能裁切 | “Credit: NIST” |
+| `chapters/s02/assets/cc0/nist_moon_dust_sem.png` | NIST 月尘颗粒 SEM 图（1 µm 标尺） | NIST；<https://www.nist.gov/image/moon-dust-particle-4-4> | 公共领域（Credit NIST） | 未修改；画面标“SEM，非原子级” | “Credit: NIST” |
+
+- 哈希、逐张说明、使用边界见 `chapters/s02/assets/cc0/LICENSES.md` 与 `SHA256SUMS.txt`。
+- 未使用来源不明的论文插图、厂商图、社交媒体图。
+
+### 8.2 项目自制：模拟 HRTEM
+
+| 文件 | 内容 | 生成方式 | 标注 |
+|---|---|---|---|
+| `chapters/s02/assets/sim/sim_srtio3_001_sr_under.png` | SrTiO₃ [001] 模拟高分辨像，Sr 列亮 | 弱相位物体 + CTF，200 kV，Cs=1 mm，离焦 −20 nm，5 nm | “模拟计算 · 非实测” |
+| `..._sr_over.png` | 同上，离焦 +20 nm，亮点/暗点反转 | 同上 | 同上 |
+| `..._sr_thick.png` | 同上，厚度 12 nm，投影叠加更多 | 同上 | 同上 |
+| `..._params.json` | 参数、模型、边界说明 | 脚本 `scripts/build_s02_sim_tem.py` | — |
+
+- 只画 Sr 原子列，所以亮点构成 3.905 Å 方格子；不代表 Ti/O 不存在。
+- 不是 multislice，不用于定量匹配；只用于讲解“亮点=原子列投影”和“离焦反转”。
+- 若操作员要求真实 HRTEM：需要一张明确 CC0/PD 或书面授权的材料学图像；当前未找到满足条件的图，故不冒充实拍。
+
+### 8.3 项目自制：AI 氛围插图
+
+| 文件 | 内容 | 生成方式 | 许可/状态 |
+|---|---|---|---|
+| `chapters/s02/assets/illustrations/*.png` | 铜网、电镜、薄片、相位、实验室、荧光屏 6 组氛围图 | Stable Diffusion v1.5，本地 GPU，txt2img；参数见 `prompts.json` | 生成图，项目自制；模型许可 CreativeML Open RAIL-M；模型权重不随视频分发 |
+| `..._graded.png` | 统一调色版（1920×1080） | `scripts/grade_s02_illustrations.py` | 项目自制 |
+| `contact_sheet_graded.png` | 六张联系表 | PIL | 仅供审阅 |
+
+- AI 图只做背景/质感，不承担科学信息；画面角落标“氛围插图 · 非科学数据”。
+- 如操作员不接受 AI 图，可整组弃用，不影响科学内容。
+
+### 8.4 项目自制：原创配乐
+
+| 文件 | 内容 | 制作方式 | 许可 |
+|---|---|---|---|
+| `chapters/s02/assets/music/s02_theme.mid` | 原创 MIDI，28 小节 | `scripts/build_s02_music.py` | 项目原创 |
+| `s02_theme.mmp` | LMMS 1.2.2 工程，4 条 SF2 Player 轨道 | 由脚本生成 | 项目原创 |
+| `s02_theme.wav` / `_norm.wav` | LMMS 渲染 / −23 LUFS 床轨 | LMMS + GeneralUser GS | 项目原创 |
+| 音色库 | GeneralUser GS v1.471 | S. Christian Collins；License v2.0 | 用于渲染，不随视频再分发；细节见 `chapters/s02/assets/music/README.md` |
+
+- 没有使用商业录音采样；没有使用 AI 生成音乐服务。
+- 片尾建议署名：“音乐：本片原创（LMMS + GeneralUser GS）”。
+
+### 8.5 TTS 与模型
+
+| 项目 | 版本/路径 | 许可/说明 |
+|---|---|---|
+| Qwen3-TTS 1.7B CustomVoice | `/home/lanshuye/Projects/QwenTTS/Qwen3-TTS-12Hz-1.7B-CustomVoice` | 以模型仓库许可证为准；本项目只调用推理，不修改模型代码，不再分发权重 |
+| Qwen3-TTS 0.6B CustomVoice | 同上（旧） | 0.6B 会忽略 `instruct`；S02 改用 1.7B |
+| Stable Diffusion 1.5 | `/home/lanshuye/Projects/QwenTTS/sd15/sd15.safetensors` | CreativeML Open RAIL-M；模型权重不随视频分发 |
+
+- 旁白、样音、整稿音频均为项目自制（TTS 生成 + 剪辑），不包含第三方录音。
+- 若未来把 TTS 音频单独再分发，需同时核对模型许可证的再分发条款。

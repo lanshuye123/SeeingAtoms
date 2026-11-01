@@ -154,3 +154,108 @@ make tts-dry
 ```
 
 完整构建命令见 `chapters/s01/README.md`、`scripts/README.md` 与 `Makefile`；S01 已按这些命令完成。
+
+## 8. S02 工作记录（2026-11-01）
+
+### 8.1 当前阶段
+
+- S02 v0.1：文案、分镜、事实核对、逐句 TTS、基础素材集完成，等待操作员审定。
+- 未进入正式动画/成片制作；`chapters/s02/renders/` 目前只有同步小样（若渲染完成）。
+
+### 8.2 关键发现：0.6B CustomVoice 会忽略 instruct
+
+S01 的 TTS 封装传了 `instruct`，但 `qwen_tts` 在 `tts_model_size == "0b6"` 时直接 `instruct = None`。也就是说，S01 的“语气指令”没有生效，只是固定音色 + 文本。
+
+处理：
+
+- 下载 `Qwen3-TTS-12Hz-1.7B-CustomVoice`（3.83 GB，ModelScope，约 15 MB/s，4.5 分钟）。
+- 6 GB 显存可跑，峰值约 4.4 GB；7 秒音频约 6–7 秒计算。
+- 改造 `src/tts/generate_narration.py`：逐段 `instruct`/`speaker`/`language`、`--limit`、`--keep-existing`、`--seed`；0.6B 时打印警告。
+- 教训：模型文档写“支持 instruct”不等于本地这个尺寸支持；要读推理代码，不要只看 README。
+
+### 8.3 生图环境
+
+- 本机没有 ComfyUI/现成 SD；用 ModelScope 下载 SD1.5 单文件（4.26 GB）。
+- `from_single_file` 默认会从 HuggingFace 取 config/tokenizer，网络不可达时会挂住；解决：
+  - 从 ModelScope 下载 `v1-inference.yaml`；
+  - `HF_ENDPOINT=https://hf-mirror.com` 让 tokenizer/config 走镜像；
+  - `diffusers==0.31.0` + `transformers==4.57.3`，与 qwen-tts 兼容；更高版本 diffusers 要求 huggingface-hub ≥1.32，会破坏 TTS 环境。
+- SD1.5 对“具体仪器结构”的生成不可靠；只把它当氛围/纹理，不承担科学示意。
+- 生成图统一用 `scripts/grade_s02_illustrations.py` 做三段调色（深墨蓝/青绿/琥珀）+ 暗角 + 颗粒。
+
+### 8.4 LMMS + SF2
+
+- LMMS 1.2.2 已安装；无界面渲染：
+  `QT_QPA_PLATFORM=offscreen lmms render project.mmp -o out.wav`
+- 项目 XML 中 `pattern` 必须放在 `<track>` 下、`<instrumenttrack>` 外，否则 LMMS 报 “project is empty”。
+- SoundFont：`GeneralUser-GS.sf2`（License v2.0，允许音乐创作）；项目只渲染，不再分发 SF2。
+- 配乐当前 28 小节、68 BPM、A 小调、约 99 秒；钢琴/pad/大提琴/钟琴。
+
+### 8.5 音画不同步的根因与修法
+
+**根因**：S01 的场景总长按 `timing.json` 算，但场景内部动画用固定 `run_time`；剩余时间全部 `wait` 到场景末尾。结果是“场景开头对、场景内部漂、场景末尾追”。
+
+**修法**：
+
+1. `scripts/build_s02_timeline.py` 逐句读取 TTS 时长，生成 `start/end`；音频拼接和 `timing.json` 使用同一组句间停顿。
+2. 分镜/`sentences.json` 把每个视觉动作绑定到句子 id。
+3. `chapters/s02/manim/common.py` 的 `TimelineScene.cue("S04_06")` 等到该句开始再播；动画时长由下一句起点反推。
+4. 渲染后可用 `check_s02_sync.py`（待补）逐 cue 对照，目标 |Δ| ≤ 0.15 s。
+
+**已验证**：`timing.json` 总长 553.1 s，`s02_narration.wav` 553.1 s；逐句起点与音频拼接一致。
+
+### 8.6 S02 待确认（新增）
+
+1. 1.7B 的逐句语气是否真的比 0.6B 自然；样音里哪组最接近。
+2. `atempo` 最高 1.6× 的 7 句是否听起来急；要不要重写/重录。
+3. AI 氛围图是否接受；`ai_05_lab`、`ai_06_phosphor` 是否弃用/重做。
+4. 模拟 HRTEM 是否够用；是否必须找真实 HRTEM 实拍。
+5. 配乐是否太“new age”；是否要减少旋律、增加低频。
+6. 同步小样的实际观感是否达到“句级对齐”。
+
+### 8.7 S02 复现入口
+
+```bash
+cd "/home/lanshuye/文档/科普视频"
+source scripts/env.sh
+
+python3 scripts/build_s02_script.py
+.venv/bin/python scripts/build_s02_timeline.py --render-audio
+.venv/bin/python scripts/build_s02_sim_tem.py
+.venv/bin/python scripts/build_s02_music.py --render
+.venv/bin/manim -qm --fps 30 --media_dir media chapters/s02/manim/sync_demo.py S02SyncDemo
+```
+
+TTS 与生图命令见 `chapters/s02/README.md`。
+
+### 8.8 S02 动效升级（2026-11-01 晚）
+
+- 按操作员意见，把 S00 样片从“静态卡片 + 淡入”升级为相机驱动的连续镜头：
+  - `MovingCameraScene` + `camera.frame.animate.set(width=..., height=...).move_to(...)`；
+  - 16 单位宽起步，推到 5.8，再拉回 12；
+  - 等距 3D 晶格作背景、原子柱从俯视转侧视、径向辉光、`LaggedStart` 颗粒点亮、`Flash` 聚焦。
+- 参考 3b1b 的三条原则：镜头是叙述者、一个镜头一个念头、连续变换优于切镜。具体见 `chapters/s02/manim/README.md`。
+- 排错记录：Manim 会按动画 hash 复用 `partial_movie_files`；修改 `self.remove()` 这类非动画语句后，画面可能仍是旧帧。必须删 `partial_movie_files/S02SyncDemo/` 再渲染。
+- 旁白用词：科学内容里的“操作员说”改为“科学家说”；“操作员”只保留在制作/审阅层（三级信息架构），不再进入科学叙述。
+
+### 8.9 S02 交付结果（2026-11-02）
+
+- 成片：`chapters/s02/renders/s02_final.mp4`，621.08 s（10:21.08），1920×1080 / 30 fps，H.264 High + AAC，约 45.9 MB。
+- 音频：旁白 553.09 s + 片尾 68 s；混后 −16.2 LUFS，峰值约 −4.3 dBFS。
+- 字幕：157 条 SRT，ASS 烧录；单行 ≤22 字。
+- 封面：`cover.png`（16:9）与 `cover_4x3_preview.png`（中心 4:3）。
+- 质检：`chapters/s02/renders/qc_report.md`。
+- 关键修复：场景视频长度按“下一场景起点 − 当前起点”取，包含 0.65 s 场景停顿；否则成片会比旁白短 4.4 s。修好后 video 621.23 s，`-shortest` 输出 621.08 s。
+- 去除场景内重复字幕：场景只保留标题/标签，旁白字幕统一由 ASS 烧录；否则每句会出现两遍。
+- 已知：S04/S05 部分镜头静止较长；S00 铜网为 AI 氛围图；示意图为教学级简化。
+
+### 8.10 S02 交付文件
+
+```text
+chapters/s02/renders/s02_final.mp4
+chapters/s02/renders/s02_final.ass
+chapters/s02/renders/s02_narration.srt
+chapters/s02/renders/cover.png
+chapters/s02/renders/cover_4x3_preview.png
+chapters/s02/renders/qc_report.md
+```

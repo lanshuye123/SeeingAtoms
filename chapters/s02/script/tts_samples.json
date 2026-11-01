@@ -1,0 +1,77 @@
+[
+  {
+    "id": "sample_A1_question_plain",
+    "text": "可电子没有眼睛，屏幕也不认识原子。那一排排线，是怎么来的？",
+    "instruct": "平静地陈述，语速中等，句末自然落下。"
+  },
+  {
+    "id": "sample_A2_question_curious",
+    "text": "可电子没有眼睛，屏幕也不认识原子。那一排排线，是怎么来的？",
+    "instruct": "带一点疑问，像在问对面的人；不要上扬太多，不要播音腔。"
+  },
+  {
+    "id": "sample_A3_question_low",
+    "text": "可电子没有眼睛，屏幕也不认识原子。那一排排线，是怎么来的？",
+    "instruct": "压低声音，放慢，像在实验室里小声说话；句末留一点空白。"
+  },
+  {
+    "id": "sample_B1_verdict_short",
+    "text": "这叫球差。球差是限制分辨率的大头。",
+    "instruct": "短促地下判断，不要拖长音。"
+  },
+  {
+    "id": "sample_B2_verdict_slow",
+    "text": "这叫球差。球差是限制分辨率的大头。",
+    "instruct": "放慢，重音落在“球差”和“大头”上，像在强调一个关键结论。"
+  },
+  {
+    "id": "sample_B3_verdict_light",
+    "text": "这叫球差。球差是限制分辨率的大头。",
+    "instruct": "轻描淡写，像顺口补充一句，不要用力。"
+  },
+  {
+    "id": "sample_C1_close_plain",
+    "text": "同样是看不见原子，第一期卡在波长，这一期卡在透镜。两件事。",
+    "instruct": "平静收束，两个短句之间停一下。"
+  },
+  {
+    "id": "sample_C2_close_warm",
+    "text": "同样是看不见原子，第一期卡在波长，这一期卡在透镜。两件事。",
+    "instruct": "带一点感慨，像回顾前两期；不要煽情，最后“两件事”收住。"
+  },
+  {
+    "id": "sample_C3_close_cool",
+    "text": "同样是看不见原子，第一期卡在波长，这一期卡在透镜。两件事。",
+    "instruct": "冷静、克制，像在做实验记录，不带情绪。"
+  },
+  {
+    "id": "sample_D1_damage_story",
+    "text": "你本来想看它，结果看着看着，它变了。",
+    "instruct": "像讲一个意外，放慢，“看着看着”要听得出停顿。"
+  },
+  {
+    "id": "sample_D2_damage_plain",
+    "text": "你本来想看它，结果看着看着，它变了。",
+    "instruct": "平静陈述，不要演，像在说明一个事实。"
+  },
+  {
+    "id": "sample_D3_damage_low",
+    "text": "你本来想看它，结果看着看着，它变了。",
+    "instruct": "压低声音，带一点遗憾；句末不要上扬。"
+  },
+  {
+    "id": "sample_E1_number_clear",
+    "text": "亮点对应一列列原子，间距三点九埃。",
+    "instruct": "报数字，清楚，稍慢；“三点九埃”要听得清。"
+  },
+  {
+    "id": "sample_E2_number_found",
+    "text": "亮点对应一列列原子，间距三点九埃。",
+    "instruct": "像刚发现一样，带一点兴致；不要夸张。"
+  },
+  {
+    "id": "sample_E3_number_flat",
+    "text": "亮点对应一列列原子，间距三点九埃。",
+    "instruct": "平淡说明，语速中等，不要强调。"
+  }
+]

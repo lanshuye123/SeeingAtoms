@@ -1,0 +1,80 @@
+[
+  {
+    "id": "ai_01_copper_grid",
+    "prompt": "macro photograph of a small round copper electron microscopy grid with a thin transparent sample in the center, held by stainless steel tweezers, dark navy background, shallow depth of field, realistic, soft teal rim light, high detail",
+    "seed": 101,
+    "use": "S00 开场：铜网与薄片",
+    "file": "ai_01_copper_grid.png",
+    "width": 768,
+    "height": 512,
+    "model": "stable-diffusion-v1.5",
+    "steps": 24,
+    "guidance": 7.0,
+    "negative": "text, watermark, logo, signature, letters, words, blurry, low quality, people, hands, face, cartoon, anime, 3d render, oversaturated, neon, sci-fi spaceship, glowing particles, clutter"
+  },
+  {
+    "id": "ai_02_column",
+    "prompt": "photograph of a tall transmission electron microscope column in a dark laboratory, metallic instrument, small green screen glowing, cinematic, realistic, muted blue tones",
+    "seed": 211,
+    "use": "S00_02：样品杆与电镜",
+    "file": "ai_02_column.png",
+    "width": 768,
+    "height": 512,
+    "model": "stable-diffusion-v1.5",
+    "steps": 24,
+    "guidance": 7.0,
+    "negative": "text, watermark, logo, signature, letters, words, blurry, low quality, people, hands, face, cartoon, anime, 3d render, oversaturated, neon, sci-fi spaceship, glowing particles, clutter"
+  },
+  {
+    "id": "ai_03_beam_slab",
+    "prompt": "extreme macro of a thin translucent crystal flake edge, backlit by a narrow teal beam, faint amber lattice planes, dark navy background, abstract, realistic, shallow depth of field",
+    "seed": 307,
+    "use": "S01/S02：电子穿过薄样品",
+    "file": "ai_03_beam_slab.png",
+    "width": 768,
+    "height": 512,
+    "model": "stable-diffusion-v1.5",
+    "steps": 24,
+    "guidance": 7.0,
+    "negative": "text, watermark, logo, signature, letters, words, blurry, low quality, people, hands, face, cartoon, anime, 3d render, oversaturated, neon, sci-fi spaceship, glowing particles, clutter"
+  },
+  {
+    "id": "ai_04_phase",
+    "prompt": "abstract wave interference pattern, thin teal and amber lines on deep navy, soft focus, fine ripples, minimalist scientific art, no objects",
+    "seed": 401,
+    "use": "S04：相位与波前",
+    "file": "ai_04_phase.png",
+    "width": 768,
+    "height": 512,
+    "model": "stable-diffusion-v1.5",
+    "steps": 24,
+    "guidance": 7.0,
+    "negative": "text, watermark, logo, signature, letters, words, blurry, low quality, people, hands, face, cartoon, anime, 3d render, oversaturated, neon, sci-fi spaceship, glowing particles, clutter"
+  },
+  {
+    "id": "ai_05_lab",
+    "prompt": "dark laboratory at night, tall metallic instrument silhouette, one small green phosphor screen glowing, cinematic, muted, realistic, no people",
+    "seed": 503,
+    "use": "S00/S06：实验室氛围",
+    "file": "ai_05_lab.png",
+    "width": 768,
+    "height": 512,
+    "model": "stable-diffusion-v1.5",
+    "steps": 24,
+    "guidance": 7.0,
+    "negative": "text, watermark, logo, signature, letters, words, blurry, low quality, people, hands, face, cartoon, anime, 3d render, oversaturated, neon, sci-fi spaceship, glowing particles, clutter"
+  },
+  {
+    "id": "ai_06_phosphor",
+    "prompt": "macro close-up of a green phosphor screen glowing softly, fine grain, dark edges, teal-green light, shallow depth of field, cinematic, realistic",
+    "seed": 607,
+    "use": "S00_03/S00_04：荧光屏绿光",
+    "file": "ai_06_phosphor.png",
+    "width": 768,
+    "height": 512,
+    "model": "stable-diffusion-v1.5",
+    "steps": 24,
+    "guidance": 7.0,
+    "negative": "text, watermark, logo, signature, letters, words, blurry, low quality, people, hands, face, cartoon, anime, 3d render, oversaturated, neon, sci-fi spaceship, glowing particles, clutter"
+  }
+]

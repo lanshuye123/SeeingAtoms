@@ -96,12 +96,47 @@ Tex("晶面间距", tex_template=S01_TEX_TEMPLATE)
 - 片尾：`chapters/s01/manim/credits.py`，黑底向上滚动 70 秒。
 - 质检：`chapters/s01/renders/qc_report.md`。
 
+### 1.6 S02 阶段实测（2026-11-01）
+
+| 项 | 结论 |
+|---|---|
+| Qwen3-TTS 1.7B CustomVoice | 可用；RTX 3060 6 GB 上峰值约 4.4 GB；7 秒音频约 6–7 秒计算；逐句 `instruct` 生效 |
+| Qwen3-TTS 0.6B CustomVoice | **会静默忽略 `instruct`**；S01 的 `--instruct` 实际未生效；S02 改用 1.7B |
+| 逐句 `atempo` | 可行；`ffmpeg atempo` 逐句处理后与 `timing.json` 对齐；当前整稿 9:13 |
+| Stable Diffusion 1.5 | 可用；`from_single_file` + 本地 `v1-inference.yaml` + `HF_ENDPOINT=https://hf-mirror.com`；768×512/24 步约 8 秒/张，峰值约 2.8 GB |
+| 生图依赖 | `diffusers==0.31.0`、`transformers==4.57.3`（与 qwen-tts 兼容）；更晚的 diffusers 会要求 huggingface-hub ≥1.32，与 TTS 环境冲突 |
+| LMMS | 1.2.2；无界面渲染用 `QT_QPA_PLATFORM=offscreen lmms render project.mmp -o out.wav`；SF2 Player 可用 |
+| SoundFont | 本机 `GeneralUser-GS.sf2`、`FluidR3_GM.sf2`；License v2.0，允许音乐创作使用 |
+| 句级同步 | `scripts/build_s02_timeline.py` 产出 `timing.json` + 整稿；音频总长与 timing 一致（553.1 s） |
+| 动效层 | `MovingCameraScene` + `effects.py`（等距晶格、原子柱、径向辉光）；S00 样片 41 s |
+| 模拟 HRTEM | 弱相位物体 + CTF；512×512，0.08 Å/px；只画 Sr 列，标“模拟计算，非实测” |
+
+S02 新增脚本：
+
+```text
+scripts/build_s02_script.py        # TSV -> sentences.json / narration.txt / script.md
+scripts/build_s02_timeline.py      # 逐句 TTS -> timing.json + 整稿旁白
+scripts/build_s02_sim_tem.py       # SrTiO3 [001] 模拟 HRTEM
+scripts/build_s02_illustrations.py # SD1.5 氛围插图
+scripts/grade_s02_illustrations.py # 统一调色
+scripts/build_s02_music.py         # MIDI + LMMS 工程 + 渲染
+chapters/s02/manim/common.py       # TimelineScene：句级 cue + 相机推拉
+chapters/s02/manim/effects.py      # 等距晶格、原子柱、辉光、标签底板
+chapters/s02/manim/sync_demo.py    # S00 动效样片
+chapters/s02/manim/README.md       # 3b1b 参考与动效规范
+```
+
+> Manim 会缓存 partial movie。修改 `self.remove()` 等非动画语句后，需要删除
+> `partial_movie_files/S02SyncDemo/` 再渲染，否则会看到旧帧。
+
 ## 2. 工具链
 
 | 环节 | 工具 | 用途 |
 |---|---|---|
 | 环境隔离 | `uv` + `.venv` | Manim/Python 渲染依赖，不污染系统 |
-| 旁白 | Qwen3-TTS CustomVoice + conda `qwen3-tts` | 中文旁白，分段生成 |
+| 旁白 | Qwen3-TTS **1.7B** CustomVoice + conda `qwen3-tts` | 中文旁白，逐句生成；逐句 `instruct` 语气控制 |
+| 生图 | Stable Diffusion 1.5（本地 GPU） | 氛围插图；不承担科学信息 |
+| 配乐 | MIDI + LMMS 1.2.2 + SF2 Player（GeneralUser GS） | 原创配乐，可编辑 `.mmp`/`.mid` |
 | 图形/动画 | Manim 0.19.0 | 矢量示意图、数学公式、动画、字幕安全区 |
 | 公式排版 | XeLaTeX + `dvisvgm` | 通过 `src/render/tex.py` 的 `S01_TEX_TEMPLATE` 调用 |
 | 数据处理 | Python 3.11 + numpy/scipy + gemmi 0.7.5 | 解析 COD CIF、计算结构因子/参考谱线、几何计算、时间轴 |

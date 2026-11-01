@@ -248,3 +248,81 @@ export NUMBA_CACHE_DIR="$PWD/.cache/numba"
 - `Source Han Sans CN`
 - `Source Han Serif CN`
 - `LXGW WenKai`
+
+## 8. S02 工作流（2026-11-01）
+
+### 8.1 文案 → 句子表
+
+```bash
+python3 scripts/build_s02_script.py
+```
+
+输入 `chapters/s02/script/narration.tsv`（句号/文本/语气指令/画面锚点），输出：
+
+- `chapters/s02/script/sentences.json`
+- `chapters/s02/script/narration.txt`
+- `chapters/s02/script.md`
+
+### 8.2 逐句 TTS（1.7B CustomVoice）
+
+```bash
+source scripts/env.sh
+NUMBA_CACHE_DIR="$PWD/.cache/numba" \
+  /home/lanshuye/miniconda3/envs/qwen3-tts/bin/python \
+  src/tts/generate_narration.py \
+  --segments-json chapters/s02/script/sentences.json \
+  --out-dir chapters/s02/audio/sentences \
+  --model-dir /home/lanshuye/Projects/QwenTTS/Qwen3-TTS-12Hz-1.7B-CustomVoice \
+  --device cuda --keep-existing
+```
+
+- `--keep-existing` 只补缺失/删除的句，适合改一两句后重录。
+- 0.6B CustomVoice 会忽略 `instruct`；要逐句语气必须用 1.7B。
+- 6 GB 显存峰值约 4.4 GB；不要与 SD/Manim 同时跑。
+
+### 8.3 句级时间轴 + 整稿旁白
+
+```bash
+.venv/bin/python scripts/build_s02_timeline.py --render-audio
+```
+
+输出 `chapters/s02/audio/timing.json` 与 `s02_narration.wav`；两者总长必须一致。
+
+### 8.4 模拟 HRTEM
+
+```bash
+.venv/bin/python scripts/build_s02_sim_tem.py
+```
+
+输出 `chapters/s02/assets/sim/*.png` 与参数 JSON；画面标“模拟计算 · 非实测”。
+
+### 8.5 AI 氛围插图
+
+```bash
+HF_ENDPOINT=https://hf-mirror.com \
+  /home/lanshuye/miniconda3/envs/qwen3-tts/bin/python \
+  scripts/build_s02_illustrations.py
+.venv/bin/python scripts/grade_s02_illustrations.py
+```
+
+依赖：`diffusers==0.31.0`、`transformers==4.57.3`、`Pillow==10.4.0`（Manim 的 `ImageMobject` 在 Pillow 13 下报 `Invalid mode for data type`，S02 已回退到 10.4.0）。
+
+### 8.6 原创 MIDI 配乐
+
+```bash
+.venv/bin/python scripts/build_s02_music.py --render
+```
+
+输出 `chapters/s02/assets/music/` 下的 `.mid`、`.mmp`、`.wav`。无界面 LMMS 渲染依赖 `QT_QPA_PLATFORM=offscreen`。
+
+### 8.7 字幕/同步报告/小样
+
+```bash
+.venv/bin/python scripts/build_s02_srt.py
+.venv/bin/manim -qm --fps 30 --media_dir media \
+  chapters/s02/manim/sync_demo.py S02SyncDemo
+```
+
+- `renders/s02_narration.srt`：草稿字幕，需人工校对断句。
+- `renders/sync_report.md`：时间轴自洽 + 小样对照。
+- `renders/sync_demo.mp4`：S00 的 7 句、约 41 秒，句级同步测试。

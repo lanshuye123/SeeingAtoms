@@ -1,0 +1,39 @@
+{
+  "material": "SrTiO3",
+  "zone_axis": "[001]",
+  "accelerating_voltage_kV": 200,
+  "electron_wavelength_A": 0.0250793,
+  "lattice_parameter_A": 3.905,
+  "pixel_size_A": 0.08,
+  "field_of_view_A": [
+    40.96,
+    40.96
+  ],
+  "cs_mm": 1.0,
+  "columns_rendered": "Sr only (default)",
+  "model": "weak phase object + CTF (not multislice)",
+  "note": "模拟计算，非实测；用于讲解原子列投影与相位衬度，不作为实验数据。默认只画锶原子列，所以亮点构成 3.905 埃的方格子；这不代表钛、氧不存在。",
+  "images": [
+    {
+      "file": "sim_srtio3_001_sr_under.png",
+      "thickness_nm": 5.0,
+      "defocus_nm": -20.0,
+      "aperture_inv_A": 0.3,
+      "label": "5 nm, defocus -20 nm, Sr column bright"
+    },
+    {
+      "file": "sim_srtio3_001_sr_over.png",
+      "thickness_nm": 5.0,
+      "defocus_nm": 20.0,
+      "aperture_inv_A": 0.3,
+      "label": "5 nm, defocus +20 nm, Sr column dark"
+    },
+    {
+      "file": "sim_srtio3_001_sr_thick.png",
+      "thickness_nm": 12.0,
+      "defocus_nm": -20.0,
+      "aperture_inv_A": 0.3,
+      "label": "12 nm, defocus -20 nm, projection through more cells"
+    }
+  ]
+}

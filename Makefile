@@ -9,7 +9,7 @@ TTS_PY := /home/lanshuye/miniconda3/envs/qwen3-tts/bin/python
 
 export PATH := $(TEX_BIN):$(PATH)
 
-.PHONY: env fonts smoke tex-smoke copy-check tts-dry tts-check patterns audio srt ass scenes credits cover concat final clean-preview
+.PHONY: env fonts smoke tex-smoke copy-check tts-dry tts-check patterns audio srt ass scenes credits cover concat final clean-preview s02-script s02-timeline s02-srt s02-sim s02-music s02-sync
 
 env:
 	bash scripts/check_env.sh
@@ -82,3 +82,28 @@ final:
 
 clean-preview:
 	rm -rf media/images/manim_smoke_test media/images/tex_smoke_test media/texts
+
+# S02 (v0.1 review package)
+s02-script:
+	python3 scripts/build_s02_script.py
+
+s02-timeline:
+	.venv/bin/python scripts/build_s02_timeline.py --render-audio
+
+s02-srt:
+	.venv/bin/python scripts/build_s02_srt.py
+
+s02-sim:
+	.venv/bin/python scripts/build_s02_sim_tem.py
+
+s02-music:
+	.venv/bin/python scripts/build_s02_music.py --render
+
+s02-sync:
+	mkdir -p chapters/s02/renders
+	UV_CACHE_DIR="$(UV_CACHE_DIR)" XDG_CACHE_HOME="$(XDG_CACHE_HOME)" MPLCONFIGDIR="$(MPLCONFIGDIR)" \
+	.venv/bin/manim -qm --fps 30 --media_dir media chapters/s02/manim/sync_demo.py S02SyncDemo
+	ffmpeg -hide_banner -loglevel error -y -i media/videos/sync_demo/720p30/S02SyncDemo.mp4 \
+		-i chapters/s02/audio/s02_narration_norm.wav -map 0:v -map 1:a -t 41.32 \
+		-c:v libx264 -preset fast -crf 20 -pix_fmt yuv420p -c:a aac -b:a 160k -ar 48000 \
+		-movflags +faststart chapters/s02/renders/sync_demo.mp4

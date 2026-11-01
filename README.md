@@ -7,6 +7,7 @@
 - 阶段一：环境/工具/理论验证完成。
 - 阶段二：S01 v0.3 文案、分镜、事实核对、制作规划完成。
 - 阶段三：S01 已制作完成，成片在 `chapters/s01/renders/s01_final.mp4`，待操作员验收。
+- 阶段四：S02 已制作完成，成片在 `chapters/s02/renders/s02_final.mp4`（10:21），待操作员验收。
 
 ## 快速入口
 
@@ -24,6 +25,11 @@
 | S01 旁白稿 | [`chapters/s01/script.md`](chapters/s01/script.md) |
 | S01 分镜 | [`chapters/s01/storyboard.md`](chapters/s01/storyboard.md) |
 | S01 成片 | [`chapters/s01/renders/s01_final.mp4`](chapters/s01/renders/s01_final.mp4) |
+| S02 制作页 | [`chapters/s02/README.md`](chapters/s02/README.md) |
+| S02 旁白稿 | [`chapters/s02/script.md`](chapters/s02/script.md) |
+| S02 分镜 | [`chapters/s02/storyboard.md`](chapters/s02/storyboard.md) |
+| S02 成片 | [`chapters/s02/renders/s02_final.mp4`](chapters/s02/renders/s02_final.mp4) |
+| S02 封面 | [`chapters/s02/renders/cover.png`](chapters/s02/renders/cover.png) |
 
 ## 环境检查
 

@@ -44,3 +44,24 @@ assets/fonts/*.ttf
 # Keep small source data and licenses
 !chapters/s01/assets/cif/
 !chapters/s01/assets/cif/*.cif
+
+# S02 generated audio (TTS, samples, narration, timing)
+chapters/s02/audio/
+
+# S02 generated renders; keep the QC report
+chapters/s02/renders/*
+!chapters/s02/renders/sync_report.md
+!chapters/s02/renders/qc_report.md
+
+# S02 generated visual assets (reproducible from scripts)
+chapters/s02/assets/illustrations/*.png
+chapters/s02/assets/music/*.wav
+chapters/s02/assets/sim/*.png
+
+# S02 text derived from narration.tsv
+chapters/s02/script/narration.txt
+chapters/s02/script/sentences.json
+chapters/s02/script/prosody.json
+
+# S02 music QA images
+chapters/s02/assets/music/*.png
